@@ -70,3 +70,24 @@ with open('D:/Corpora/Corpora Code/outfile.csv', 'r', encoding = 'euc_kr', error
                 corpus_writer.writerow(out)
             else:
                 corpus_writer.writerow(line)
+
+with open("D:/Corpora/Corpora Code/outfile_revised.csv", 'r', encoding = 'euc_kr', errors='ignore') as file:
+    with open("D:/Corpora/Corpora Code/Morphemes Only.csv", 'w', encoding = 'euc_kr', errors='ignore') as output:
+        csv_reader = csv.reader(file, delimiter=',')
+        mycsvwriter = csv.writer(output, delimiter=',', lineterminator='\n')
+        next(csv_reader)
+        for line in csv_reader:
+            morphemes = line[1:]
+            mycsvwriter.writerow(morphemes)
+
+with open("D:/Corpora/Corpora Code/outfile_revised.csv", 'r', encoding = 'euc_kr', errors='ignore') as file:
+    with open("D:/Corpora/Corpora Code/Exact Match Only.csv", 'w', encoding = 'euc_kr', errors='ignore') as output:
+        csv_reader = csv.reader(file, delimiter=',')
+        mycsvwriter = csv.writer(output, delimiter=',', lineterminator='\n')
+        next(csv_reader)
+        for line in csv_reader:
+            try:
+                morphemes = line[0]
+                mycsvwriter.writerow([morphemes])
+            except IndexError:
+                mycsvwriter.writerow('NULL')
