@@ -1,4 +1,4 @@
-#a program to convert multiple text files into one long text file
+#a program to convert the separate KAIST txt files into one searchable corpus
 
 import csv
 import glob
@@ -91,3 +91,15 @@ with open("D:/Corpora/Corpora Code/outfile_revised.csv", 'r', encoding = 'euc_kr
                 mycsvwriter.writerow([morphemes])
             except IndexError:
                 mycsvwriter.writerow('NULL')
+
+with open("D:/Corpora/Corpora Code/outfile_revised.csv", 'r', encoding = 'euc_kr', errors='ignore') as file:
+    with open("D:/Corpora/Corpora Code/Root Morpheme Only.csv", 'w', encoding = 'euc_kr', errors='ignore') as output:
+        csv_reader = csv.reader(file, delimiter=',')
+        mycsvwriter = csv.writer(output, delimiter=',', lineterminator='\n')
+        next(csv_reader)
+        for line in csv_reader:
+            try:
+                morphemes = line[1]
+                mycsvwriter.writerow([morphemes])
+            except IndexError:
+                mycsvwriter.writerow(['NULL'])
