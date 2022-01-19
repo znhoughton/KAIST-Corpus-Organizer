@@ -1,18 +1,21 @@
 #a program to convert the separate KAIST txt files into one searchable corpus
 
+#while this is convenient to have a single file with all the corpus information, if you prefer to keep the txt files separate, 
+#the corpus search scripts should be easy to adapt using: for filename in listdir('C:/wherever/the_files/are_located'). This is what I opt to do for the 100man corpus search.
+
 import csv
 import glob
 import pandas
 
 
-read_files = glob.glob("D:/Corpora/KAIST POS Tagged/**/*.txt", recursive=True) #read all of our txt files for the hand-tagged corpus
+read_files = glob.glob("D:/Corpora/KAIST POS Tagged/**/*.txt", recursive=True) #read all of our txt files for the hand-tagged corpus, this is the 1million word corpus
 
 with open("KAIST POS.txt", "wb") as outfile: #open our KAIST corpus file
     for f in read_files:
         with open(f, "rb") as infile:
             outfile.write(infile.read())
 
-read_files2 = glob.glob("D:/Corpora/KAIST Automatically Analyzed Corpus/**/*.txt", recursive=True) #read all of our txt files for the automatically analyzed corpus
+read_files2 = glob.glob("D:/Corpora/KAIST Automatically Analyzed Corpus/**/*.txt", recursive=True) #read all of our txt files for the automatically analyzed corpus, this is the 40million word corpus
 with open("KAIST Automatically Analyzed Corpus.txt", "wb") as outfile:
     for f in read_files2:
         with open(f, "rb") as infile:
@@ -34,7 +37,7 @@ with open('D:/Corpora/Corpora Code/KAIST Automatically Analyzed Corpus.txt', 'r'
 
 new_content = []
 for line in content:
-    clean_line = line.replace('\00', '') #get rid of all the null values. I'm not a huge fan of this solve, but losing a few data points isn't a huge problem with the size of this corpus.
+    clean_line = line.replace('\00', '') #get rid of all the null values. I'm not a huge fan of this solve, but losing a few data points isn't a huge problem given the size of this corpus.
     new_content.append(clean_line)
 
 with open('D:/Corpora/Corpora Code/outfile.csv', 'w', encoding = 'euc_kr', errors='ignore') as file_out:
@@ -70,7 +73,9 @@ with open('D:/Corpora/Corpora Code/outfile.csv', 'r', encoding = 'euc_kr', error
                 corpus_writer.writerow(out) #write corpus
             else:
                 corpus_writer.writerow(line)
-
+#### This section creates some files that others may not need, including a corpus of only morphemes, and a corpus of only "exact matches." It was convenient to separate these out of the main corpus for me, but if you're worried about memory you can omit this part depending on your goal.
+##################################################
+##################################################
 with open("D:/Corpora/Corpora Code/outfile_revised.csv", 'r', encoding = 'euc_kr', errors='ignore') as file: #open file created last section
     with open("D:/Corpora/Corpora Code/Morphemes Only.csv", 'w', encoding = 'euc_kr', errors='ignore') as output: #open file created earlier
         csv_reader = csv.reader(file, delimiter=',') #read csv
