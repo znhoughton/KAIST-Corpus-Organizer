@@ -7,7 +7,7 @@ library(lme4)
 library(naniar)
 
 options (contrasts = c("contr.sum","cont.sum")) ## set plausible to plausibility1
-surface_and_base_freqs = read_csv("Surface and Base Frequencies of Korean Passives v3.csv", locale = locale(encoding = "euc-kr"))
+surface_and_base_freqs = read_csv("Surface and Base Frequencies of Korean Passives v2.csv", locale = locale(encoding = "euc-kr"))
 test = surface_and_base_freqs %>%
   group_by(Subnumber, `Base Frequency`, `Surface Frequency of the Exact Word`) %>%
   filter(Subnumber == 1)
